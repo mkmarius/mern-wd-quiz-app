@@ -1,0 +1,18 @@
+.main-heading h1::before,
+.quiz-pages p::before {
+    content: "<";
+}
+
+.main-heading h1::after,
+.quiz-pages p::after {
+    content: ">";
+}
+
+.cta-btn:hover {
+    background: #3f9dce;
+    color: #031239;
+}
+
+.answer label input[type="radio"]:checked ~ span::after {
+    display: unset;
+}
