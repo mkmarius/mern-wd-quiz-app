@@ -1,26 +1,32 @@
 import QuestionButton from "./QuestionButton";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useQuestionsContext } from "../hooks/useQuestionsContext";
+import { REDUCER_ACTION_TYPE } from "../features/QuestionsReducer";
 
-type Question = {
+export type Question = {
     _id: string;
     questionNumber: number;
     question: string;
 };
 
 export default function QuestionsList() {
-    const [questions, setQuestions] = useState<Question[]>([]);
+    const { questions, dispatch } = useQuestionsContext();
 
     useEffect(() => {
         const fetchQuestions = async () => {
             const response = await fetch("http://localhost:4000/api/questions");
             const questionsData = await response.json();
+
             if (response.ok) {
-                setQuestions(questionsData);
+                dispatch({
+                    type: REDUCER_ACTION_TYPE.SET_QUESTIONS,
+                    payload: questionsData,
+                });
             }
         };
 
         fetchQuestions();
-    }, []);
+    }, [dispatch]);
 
     return (
         <div className="w-full h-full flex flex-wrap justify-center">

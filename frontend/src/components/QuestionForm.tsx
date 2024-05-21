@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useQuestionsContext } from "../hooks/useQuestionsContext";
+import { REDUCER_ACTION_TYPE } from "../features/QuestionsReducer";
 
 export default function QuestionForm() {
     type Inputs = {
@@ -20,6 +22,8 @@ export default function QuestionForm() {
     const [errors, setErrors] = useState<Errors>({});
 
     const [successMessage, setSuccessMessage] = useState<string>("");
+
+    const { dispatch } = useQuestionsContext();
 
     function validate(
         newInputs: Inputs,
@@ -83,6 +87,8 @@ export default function QuestionForm() {
                 setSuccessMessage("New Question Added!");
                 setTimeout(() => setSuccessMessage(""), 1000);
                 console.log("New Question Added", json);
+                dispatch({ type: REDUCER_ACTION_TYPE.CREATE_QUESTION, payload: json});
+                console.log(json);
             }
         } else {
             setErrors(newErrors);
@@ -92,15 +98,13 @@ export default function QuestionForm() {
     return (
         <form
             className="m-5 flex flex-col justify-center items-start w-6/12"
-            onSubmit={handleSubmit}
-        >
+            onSubmit={handleSubmit}>
             <h3 className="text-white text-3xl font-bold font-body mb-2">
                 Add a New Question
             </h3>
             <label
                 className="text-white font-body flex flex-col text-2xl font-medium mb-3 w-full"
-                htmlFor="question-number"
-            >
+                htmlFor="question-number">
                 Question Number
                 <input
                     className="bg-dark-digital-blue focus:bg-light-digital-blue appearance-none border-2 outline-none border-light-digital-blue px-3 py-2 rounded-lg mt-2"
@@ -118,8 +122,7 @@ export default function QuestionForm() {
             </label>
             <label
                 className="text-white font-body flex flex-col text-2xl font-medium w-full"
-                htmlFor="question-text"
-            >
+                htmlFor="question-text">
                 Question Text
                 <input
                     className="bg-dark-digital-blue focus:bg-light-digital-blue appearance-none border-2 outline-none border-light-digital-blue px-3 py-2 rounded-lg mt-2"
