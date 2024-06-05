@@ -1,4 +1,4 @@
-import { Question } from "../components/QuestionsList";
+import { Question } from "../pages/QuizPage";
 
 export const initialState = {
     questions: [] as Question[],
@@ -7,6 +7,7 @@ export const initialState = {
 export const enum REDUCER_ACTION_TYPE {
     SET_QUESTIONS,
     CREATE_QUESTION,
+    DELETE_QUESTION,
 }
 
 type SetQuestionsAction = {
@@ -19,7 +20,15 @@ type CreateQuestionAction = {
     payload: Question;
 };
 
-type QuestionsAction = SetQuestionsAction | CreateQuestionAction;
+type DeleteQuestionAction = {
+    type: REDUCER_ACTION_TYPE.DELETE_QUESTION;
+    payload: Question;
+};
+
+type QuestionsAction =
+    | SetQuestionsAction
+    | CreateQuestionAction
+    | DeleteQuestionAction;
 
 export const questionsReducer = (
     state: typeof initialState,
@@ -33,6 +42,12 @@ export const questionsReducer = (
         case REDUCER_ACTION_TYPE.CREATE_QUESTION:
             return {
                 questions: [action.payload, ...state.questions],
+            };
+        case REDUCER_ACTION_TYPE.DELETE_QUESTION:
+            return {
+                questions: state.questions.filter(
+                    (question) => question._id !== action.payload._id
+                ),
             };
         default:
             return state;

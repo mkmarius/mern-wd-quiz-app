@@ -2,7 +2,7 @@ import MainContainer from "../components/MainContainer";
 import { MatrixAnimationOverlay } from "../components/MatrixAnimationOverlay";
 import MainHeading from "../components/MainHeading";
 import IntroDescription from "../components/IntroDescription";
-import Button from "../components/Button";
+import CustomLink from "../components/CustomLink";
 
 export default function HomePage() {
     return (
@@ -12,7 +12,7 @@ export default function HomePage() {
                 <div className="intro-container w-full flex flex-col items-center justify-between h-[90%]">
                     <MainHeading />
                     <IntroDescription />
-                    <Button link="/quiz" value="Start" />
+                    <CustomLink link="/quiz" value="Start" />
                 </div>
                 <MatrixAnimationOverlay />
             </div>

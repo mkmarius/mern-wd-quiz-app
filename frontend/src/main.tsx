@@ -18,6 +18,11 @@ const router = createBrowserRouter([
         element: <QuizPage />,
         errorElement: <NotFoundPage />,
     },
+    {
+        path: "/quiz/:questionNumber",
+        element: <QuizPage />,
+        errorElement: <NotFoundPage />,
+    },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

@@ -1,17 +1,16 @@
-import { Link } from "react-router-dom";
+import { MouseEventHandler } from 'react';
 
 type ButtonProps = {
-    link: string;
     value: string;
+    class: string;
+    event: MouseEventHandler<HTMLButtonElement> | undefined;
 };
 
 export default function Button(props: ButtonProps) {
     return (
-        <Link
-            className="cta-btn text-white border-2 rounded-lg font-body font-bold border-light-digital-blue bg-medium-digital-blue px-5 py-2 text-[2.5rem] mt-[2.5rem]"
-            to={props.link}
-        >
+        <button onClick={props.event}
+            className={`text-light-digital-blue border-2 rounded-lg font-body font-bold bg-medium-digital-blue border-light-digital-blue px-3 py-2 text-2xl w-full mt-5 hover:bg-light-digital-blue hover:text-white ${props.class}`}>
             {props.value}
-        </Link>
+        </button>
     );
 }

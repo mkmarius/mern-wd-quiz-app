@@ -32,10 +32,14 @@ export const createQuestion = async (
     res: Response,
     next: NextFunction
 ) => {
-    const { questionNumber, question } = req.body;
+    const { questionNumber, question, answers } = req.body;
 
     try {
-        const newQuestion = await Question.create({ questionNumber, question });
+        const newQuestion = await Question.create({
+            questionNumber,
+            question,
+            answers,
+        });
         res.status(200).json(newQuestion);
     } catch (error) {
         next(error);
@@ -62,8 +66,6 @@ export const deleteQuestion = async (req: Request, res: Response) => {
 //Update a question
 export const updateQuestion = async (req: Request, res: Response) => {
     const { questionId } = req.params;
-
-    console.log(questionId);
 
     if (!mongoose.Types.ObjectId.isValid(questionId)) {
         return res.status(404).json({ error: "This question does not exist!" });

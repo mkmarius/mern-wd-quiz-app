@@ -27,7 +27,7 @@ export const QuestionsContextProvider = ({
 }: QuestionsContextProviderProps) => {
 
     return (
-        <QuestionsContext.Provider value={useQuestionsReducer()}>
+        <QuestionsContext.Provider value={{...useQuestionsReducer()}}>
             {children}
         </QuestionsContext.Provider>
     );
