@@ -12,7 +12,7 @@ export default function HomePage() {
                 <div className="intro-container w-full flex flex-col items-center justify-between h-[90%]">
                     <MainHeading />
                     <IntroDescription />
-                    <CustomLink link="/quiz" value="Start" />
+                    <CustomLink link="/quiz/1" value="Start" />
                 </div>
                 <MatrixAnimationOverlay />
             </div>

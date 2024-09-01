@@ -1,4 +1,4 @@
-import { MouseEventHandler } from 'react';
+import { MouseEventHandler } from "react";
 
 type ButtonProps = {
     value: string;
@@ -8,8 +8,9 @@ type ButtonProps = {
 
 export default function Button(props: ButtonProps) {
     return (
-        <button onClick={props.event}
-            className={`text-light-digital-blue border-2 rounded-lg font-body font-bold bg-medium-digital-blue border-light-digital-blue px-3 py-2 text-2xl w-full mt-5 hover:bg-light-digital-blue hover:text-white ${props.class}`}>
+        <button
+            onClick={props.event}
+            className={`text-dark-digital-blue border-2 rounded-lg font-body font-bold bg-light-digital-blue border-light-digital-blue hover:border-light-digital-blue hover:text-white hover:bg-medium-digital-blue px-3 py-2 text-2xl w-full ${props.class}`}>
             {props.value}
         </button>
     );

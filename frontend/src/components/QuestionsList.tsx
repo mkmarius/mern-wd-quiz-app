@@ -1,21 +1,24 @@
+import { FC } from "react";
 import QuestionButton from "./QuestionButton";
 import { Question } from "../pages/QuizPage";
 
 type QuestionProps = {
     questions: Question[];
+    questionNumber: number;
 };
-
-export default function QuestionsList(props: QuestionProps) {
+const QuestionsList: FC<QuestionProps> = ({ questions, questionNumber }) => {
     return (
-        <div className="w-full h-full flex flex-wrap justify-center">
-            {props.questions &&
-                props.questions.map((question: Question, index) => (
+        <div className="w-full flex justify-center mb-5 mt-5">
+            {questions &&
+                questions.map((question: Question, index) => (
                     <QuestionButton
                         key={question._id}
                         questionNumber={index + 1}
-                        questionId={question._id}
+                        currentQuestion={questionNumber}
                     />
                 ))}
         </div>
     );
-}
+};
+
+export default QuestionsList;

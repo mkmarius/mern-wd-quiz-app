@@ -9,14 +9,16 @@ export default {
                 "light-digital-blue": "#3F9DCE",
                 "digital-red": "#CE3F3F",
                 "digital-green": "#3B992C",
+                "digital-yellow": "#F3C212",
+                "digital-orange": "#FF6000",
                 "neon-green": "#00FF38",
             },
             borderWidth: {
                 3: "3px",
             },
             fontFamily: {
-              "body": ["Inconsolata"],
-            }
+                body: ["Inconsolata"],
+            },
         },
     },
     plugins: [],

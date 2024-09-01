@@ -5,7 +5,7 @@ type AnswerProps = {
 
 export default function Answer(props: AnswerProps) {
     return (
-        <div className="answer border-2 border-light-digital-blue bg-medium-digital-blue ml-3 mb-5 p-5">
+        <div className="answer border-2 border-light-digital-blue rounded-lg w-full bg-medium-digital-blue mb-5 p-5">
             <label
                 htmlFor={`answer-${props.index}`}
                 className="text-white text-5xl block relative pl-[3.5rem] mb-3 cursor-pointer select-none">

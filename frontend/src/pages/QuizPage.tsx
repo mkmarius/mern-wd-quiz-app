@@ -4,10 +4,11 @@ import QuestionContainer from "../components/QuestionContainer";
 import QuestionsList from "../components/QuestionsList";
 import Answer from "../components/Answer";
 // import QuestionForm from "../components/QuestionForm";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuestionsContext } from "../hooks/useQuestionsContext";
 import { REDUCER_ACTION_TYPE } from "../features/QuestionsReducer";
+import CustomLink from "../components/CustomLink";
 
 export type Question = {
     _id: string;
@@ -17,14 +18,23 @@ export type Question = {
 
 export default function QuizPage() {
     const { questions, dispatch } = useQuestionsContext();
-    console.log(questions);
-    const questionNumber = useParams().questionNumber;
-    let currentNumber: number = 1;
-    if (questionNumber) currentNumber = parseInt(questionNumber);
+    const questionPath = useParams().questionNumber;
+    const [currentQuestion, setQurrentQuestion] = useState<Question>();
+
+    let questionNumber: number;
+
+    if (questionPath) {
+        questionNumber = parseInt(questionPath);
+    } else {
+        questionNumber = 1;
+    }
 
     useEffect(() => {
         const fetchQuestions = async () => {
-            const response = await fetch("http://localhost:4000/api/questions");
+            const response = await fetch(
+                "http://localhost:4000/api/questions/"
+            );
+
             const questionsData = await response.json();
 
             if (response.ok) {
@@ -32,27 +42,54 @@ export default function QuizPage() {
                     type: REDUCER_ACTION_TYPE.SET_QUESTIONS,
                     payload: questionsData,
                 });
+
+                setQurrentQuestion({
+                    _id: questionsData[questionNumber - 1]._id,
+                    question: questionsData[questionNumber - 1].question,
+                    answers: questionsData[questionNumber - 1].answers,
+                });
             }
         };
 
         fetchQuestions();
-    }, [dispatch]);
+    }, [questionNumber, dispatch]);
 
     return (
-        <MainContainer innerLayoutStyling="flex flex-col">
+        <MainContainer innerLayoutStyling="flex flex-col items-center">
             <QuizHeader />
-            <div className="flex w-full">
-                <div className="w-[15%] flex flex-col">
-                    <QuestionContainer questions={questions} />
-                    <QuestionsList questions={questions} />
+            <div className="w-full max-w-[1440px] flex flex-col">
+                <div className="w-full flex flex-col">
+                    <QuestionsList
+                        questions={questions}
+                        questionNumber={questionNumber}
+                    />
+                    {currentQuestion && (
+                        <QuestionContainer
+                            question={currentQuestion}
+                            questionNumber={questionNumber}
+                        />
+                    )}
                 </div>
-                <div className="w-[85%]">
+                <div>
                     <form className="w-full">
                         {questions &&
                             questions.length > 0 &&
-                            questions[currentNumber - 1].answers.map(
-                                (answer, index) => <Answer answer={answer} index={index} />
+                            questions[questionNumber - 1].answers.map(
+                                (answer, index) => (
+                                    <Answer
+                                        key={index}
+                                        answer={answer}
+                                        index={index}
+                                    />
+                                )
                             )}
+                        {questionNumber < questions.length && (
+                            <CustomLink
+                                link={`/quiz/${questionNumber + 1}`}
+                                value="Continue"
+                                class="flex items-center justify-center w-full text-5xl h-[5rem] mt-3"
+                            />
+                        )}
                     </form>
                     {/* <QuestionForm /> */}
                     {/* TODO: MOVE TO ADMIN AREA <QuestionForm /> */}
